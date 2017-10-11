@@ -43,6 +43,9 @@ class rabbitmq::config {
   $ssl_port                    = $rabbitmq::ssl_port
   $ssl_interface               = $rabbitmq::ssl_interface
   $ssl_management_port         = $rabbitmq::ssl_management_port
+  $ssl_management_cacert       = $rabbitmq::ssl_management_cacert
+  $ssl_management_cert         = $rabbitmq::ssl_management_cert
+  $ssl_management_key          = $rabbitmq::ssl_management_key
   $ssl_stomp_port              = $rabbitmq::ssl_stomp_port
   $ssl_verify                  = $rabbitmq::ssl_verify
   $ssl_fail_if_no_peer_cert    = $rabbitmq::ssl_fail_if_no_peer_cert
@@ -132,6 +135,22 @@ class rabbitmq::config {
     $environment_variables = $_environment_variables + $ipv6_or_tls_env
   } else {
     $environment_variables = $_environment_variables
+  }
+
+  if ($ssl_management_cacert) {
+    $_ssl_management_cacert = $ssl_management_cacert
+  } else {
+    $_ssl_management_cacert = $ssl_cacert
+  }
+  if ($ssl_management_cert) {
+    $_ssl_management_cert = $ssl_management_cert
+  } else {
+    $_ssl_management_cert = $ssl_cert
+  }
+  if ($ssl_management_key) {
+    $_ssl_management_key = $ssl_management_key
+  } else {
+    $_ssl_management_key = $ssl_key
   }
 
   file { '/etc/rabbitmq':
