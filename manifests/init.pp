@@ -163,8 +163,8 @@
 # @param ssl_key Key to use for SSL.
 # @param ssl_only Configures the service to only use SSL.  No cleartext TCP listeners will be created. Requires that ssl => true and
 # @param ssl_management_port SSL management port.
-# @param ssl_management_cacert SSL management cacert. if unset set to ssl_cacert for backwards compatibility. If you want to set no
-# management CA cert path, set this to false.
+# @param ssl_management_cacert_enable If you want to set no management CA cert path, set this to false.
+# @param ssl_management_cacert SSL management cacert. if unset set to ssl_cacert for backwards compatibility.
 # @param ssl_management_cert SSL management cert. if unset set to ssl_cert for backwards compatibility.
 # @param ssl_management_key SSL management key. if unset set to ssl_key for backwards compatibility.
 # @param ssl_port SSL port for RabbitMQ
@@ -247,9 +247,10 @@ class rabbitmq(
   $ssl_port                                             = $rabbitmq::params::ssl_port,
   Optional[String] $ssl_interface                       = undef,
   Integer $ssl_management_port                          = $rabbitmq::params::ssl_management_port,
-  Optional[Stdlib::Absolutepath] $ssl_management_cacert = undef,
-  Optional[Stdlib::Absolutepath] $ssl_management_cert   = undef,
-  Optional[Stdlib::Absolutepath] $ssl_management_key    = undef,
+  Boolean $ssl_management_cacert_enable                 = $rabbitmq::params::ssl_management_cacert_enable,
+  Optional[Stdlib::Absolutepath] $ssl_management_cacert = $ssl_cacert,
+  Optional[Stdlib::Absolutepath] $ssl_management_cert   = $ssl_cert,
+  Optional[Stdlib::Absolutepath] $ssl_management_key    = $ssl_key,
   Integer $ssl_stomp_port                               = $rabbitmq::params::ssl_stomp_port,
   $ssl_verify                                           = $rabbitmq::params::ssl_verify,
   $ssl_fail_if_no_peer_cert                             = $rabbitmq::params::ssl_fail_if_no_peer_cert,
